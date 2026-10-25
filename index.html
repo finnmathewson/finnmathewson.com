@@ -18,7 +18,7 @@
 
 <!-- hand-drawn wobble for lines and the wordmark -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <filter id="wobble"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6"/></filter>
+  <filter id="wobble" x="-6%" y="-30%" width="112%" height="175%"><feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="4"/><feDisplacementMap in="SourceGraphic" scale="6"/></filter>
   <filter id="wobble-line"><feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="9"/><feDisplacementMap in="SourceGraphic" scale="2"/></filter>
 </svg>
 
@@ -150,15 +150,15 @@
 <section class="rates paper">
   <div class="rates-top">
     <figure class="truck-tall" data-reveal><img loading="lazy" decoding="async" src="img/tacoma-golden-forest.jpg" alt="Finn's '99 Tacoma at camp in golden forest light">
-      <span class="track-box" style="left:13%;top:40%;width:78%;height:34%"></span>
-      <span class="track-box" style="left:46%;top:59%;width:17%;height:15%"></span>
+      <span class="track-box tb-truck" style="left:13%;top:40%;width:78%;height:34%"></span>
+      <span class="track-box tb-wheel" style="left:46%;top:59%;width:17%;height:15%"></span>
     </figure>
     <div class="panel ratelist locked" data-reveal style="--d:.1s">
       <h2 class="wordmark">rates</h2>
       <p class="adv">Your product shows up in my real adventures, not ad reads. Worn on the hike, packed in the truck, tagged in the post. These videos perform like my normal reels.</p>
       <form class="unlock" autocomplete="off" novalidate>
         <p class="lock-note"><span aria-hidden="true">🔒</span> This section is locked.</p>
-        <p class="lock-why">Want to work together? <a href="https://instagram.com/finn_mathewson">DM me</a> or <a href="mailto:finnmathewsonsponsor@gmail.com">email me</a> and ask for the rate code.</p>
+        <p class="lock-why">Want to work together? <a class="tap" href="https://instagram.com/finn_mathewson">DM me</a> or <a class="tap" href="mailto:finnmathewsonsponsor@gmail.com">email me</a> and ask for the rate code.</p>
         <div class="code-row">
           <input name="code" type="text" placeholder="Enter rate code" aria-label="Rate code" spellcheck="false" autocapitalize="off" autocorrect="off">
           <button type="submit">Unlock</button>

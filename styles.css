@@ -29,7 +29,7 @@ body::after {
 }
 
 /* centered frame on big screens, with slow drifting contour lines in the dark edges */
-.frame { position: relative; max-width: 1320px; margin: 0 auto; background: var(--paper); box-shadow: 0 0 0 1px rgba(169,186,211,.08), 0 0 80px rgba(0,0,0,.6); }
+.frame { position: relative; max-width: 1320px; margin: 0 auto; overflow-x: clip; /* no sideways wobble on phones */ background: var(--paper); box-shadow: 0 0 0 1px rgba(169,186,211,.08), 0 0 80px rgba(0,0,0,.6); }
 .edges { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
   background:
     repeating-radial-gradient(ellipse at 12% 30%, transparent 0 26px, rgba(169,186,211,.13) 27px 28px, transparent 29px 54px),
@@ -42,7 +42,8 @@ body::after {
 /* shared pieces */
 .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
-.wordmark { font-family: var(--display); font-weight: 400; text-transform: lowercase; letter-spacing: -.01em; line-height: .86; filter: url(#wobble); }
+.wordmark { font-family: var(--display); font-weight: 400; text-transform: lowercase; letter-spacing: -.01em; line-height: .86; filter: url(#wobble);
+  padding-bottom: .35em; margin-bottom: -.35em; } /* taller box so Safari doesn't clip the tails of y, j, g, q; spacing pulled back so nothing moves */
 .label { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 .light, .light .label { color: var(--snow); }
 .dark { background: var(--deep); color: var(--snow); }
@@ -109,7 +110,7 @@ body::after {
 .meadow.in .strip { clip-path: inset(27.82% calc(100% - var(--l) - 17.06%) 63.17% var(--l)); }
 .band-label { position: absolute; z-index: 3; top: 22px; left: var(--gutter); font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--snow); }
 .about-grid { position: relative; display: grid; grid-template-columns: 1.05fr .8fr 1fr; gap: clamp(16px, 2.4vw, 32px); padding: clamp(28px, 5vw, 64px) var(--gutter) 0; max-width: 1400px; margin: 0 auto; align-items: start; }
-.bio .wordmark { font-size: clamp(40px, 5vw, 64px); margin: 16px 0 20px; }
+.bio .wordmark { font-size: clamp(40px, 5vw, 64px); margin: 16px 0 calc(20px - .35em); }
 .bio p:not(.label):not(.rule) { font-size: 15px; line-height: 1.6; margin-bottom: 12px; }
 .rule { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
 .wordmark.small { font-size: clamp(30px, 3.4vw, 44px); color: var(--rust); }
@@ -135,7 +136,7 @@ body::after {
 .quests > .bg { position: fixed; opacity: 0; transition: opacity .6s; filter: brightness(.55) saturate(.9); z-index: 0; pointer-events: none; }
 .quests.on > .bg { opacity: 1; }
 .quests .wrap { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; padding: clamp(60px, 9vw, 120px) var(--gutter) 0; }
-.wordmark.big { font-size: clamp(64px, 11vw, 150px); color: var(--snow); margin-bottom: clamp(28px, 4vw, 48px); }
+.wordmark.big { font-size: clamp(64px, 11vw, 150px); color: var(--snow); margin-bottom: calc(clamp(28px, 4vw, 48px) - .35em); }
 .trips { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(14px, 2vw, 26px); margin-top: 16px; align-items: start; }
 .trip { margin: 0; }
 .trip:nth-child(2) { margin-top: 50px; } .trip:nth-child(3) { margin-top: 18px; } .trip:nth-child(4) { margin-top: 70px; }
@@ -148,7 +149,7 @@ body::after {
 /* up next + insights */
 .next { display: grid; grid-template-columns: 1fr minmax(220px, 300px); gap: clamp(20px, 4vw, 60px); align-items: center; padding-top: clamp(40px, 6vw, 80px); }
 .next ul { list-style: none; display: flex; flex-wrap: wrap; gap: 18px clamp(24px, 4vw, 54px); margin: 14px 0 26px; }
-.next .wordmark { display: block; font-size: clamp(44px, 6vw, 80px); line-height: 1.05; padding-bottom: .32em; color: var(--snow); } /* room for the hanging j / p */
+.next .wordmark { display: block; font-size: clamp(44px, 6vw, 80px); line-height: 1.05; padding-bottom: .32em; margin-bottom: 0; color: var(--snow); } /* room for the hanging j / p */
 .next small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--track); margin-top: 16px; }
 .pitch { font-size: clamp(17px, 1.6vw, 21px); line-height: 1.5; max-width: 40em; color: var(--snow); }
 .pitch.small { font-size: clamp(15px, 1.3vw, 17px); color: #b9c6d9; margin-top: 12px; }
@@ -170,7 +171,7 @@ body::after {
 .rates-top { position: relative; display: grid; grid-template-columns: minmax(0, .9fr) 1.1fr; gap: clamp(20px, 4vw, 60px); align-items: center; padding-right: var(--gutter); }
 .truck-tall { position: relative; margin: 0; aspect-ratio: 2 / 3; overflow: hidden; max-height: 100vh; transform: none !important; }
 .truck-tall img { width: 100%; height: 100%; object-fit: cover; }
-.ratelist .wordmark, .bonus .wordmark { font-size: clamp(44px, 5vw, 64px); margin-bottom: 18px; }
+.ratelist .wordmark, .bonus .wordmark { font-size: clamp(44px, 5vw, 64px); margin-bottom: calc(18px - .35em); }
 .ratelist dl div { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(28,26,24,.18); font-size: 16px; }
 .ratelist dl div:first-child { border-top: 1.5px solid var(--ink); }
 .ratelist dd { font-weight: 800; white-space: nowrap; }
@@ -208,7 +209,7 @@ body::after {
 .chart b { position: absolute; bottom: 100%; left: 0; font-size: clamp(12px, 1.3vw, 17px); padding-bottom: 6px; white-space: nowrap; }
 .chart span { position: absolute; top: calc(100% + 8px); left: 0; font-family: var(--mono); font-size: 10px; }
 .bonus { padding-bottom: 44px; }
-.contact .wordmark { font-size: clamp(38px, 5vw, 64px); margin: 16px 0 16px; }
+.contact .wordmark { font-size: clamp(38px, 5vw, 64px); margin: 16px 0 calc(16px - .35em); }
 .contact p:not(.label) { font-size: 16px; line-height: 1.5; max-width: 40em; }
 .contact-row { display: flex; flex-wrap: wrap; gap: 14px 40px; margin-top: 22px; }
 .contact-row a { text-decoration: none; font-size: 17px; font-weight: 600; }
@@ -240,6 +241,14 @@ body::after {
   .ratelist { margin: 0 var(--gutter); }
   .ratelist dl div { font-size: 15px; }
   .chart b { font-size: 11px; }
+  /* phone polish */
+  .band-label { top: 6px; font-size: 9px; } /* sits above the snowy windows instead of on them */
+  .code-row input { font-size: 16px; } /* 16px+ stops iPhones zooming the page when the box is tapped */
+  .lock-why a.tap { display: inline-block; padding: 8px 2px; margin: -8px 0; } /* bigger tap area, same look */
+  .chart span, .insights .k, .foot, .scroll-hint { font-size: 11px; }
+  /* truck photo is cropped 4:5 on phones, so its boxes move to stay on the truck and front tire */
+  .truck-tall .tb-truck { top: 38% !important; height: 40.8% !important; }
+  .truck-tall .tb-wheel { top: 60.8% !important; height: 18% !important; }
 }
 
 /* calm mode: everything shows in its finished state */
