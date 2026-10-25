@@ -29,7 +29,7 @@ body::after {
 }
 
 /* centered frame on big screens, with slow drifting contour lines in the dark edges */
-.frame { position: relative; max-width: 1320px; margin: 0 auto; overflow-x: clip; /* no sideways wobble on phones */ background: var(--paper); box-shadow: 0 0 0 1px rgba(169,186,211,.08), 0 0 80px rgba(0,0,0,.6); }
+.frame { position: relative; overflow-x: clip; /* full screen width; clip stops sideways wobble on phones */ background: var(--paper); }
 .edges { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: .5;
   background:
     repeating-radial-gradient(ellipse at 12% 30%, transparent 0 26px, rgba(169,186,211,.13) 27px 28px, transparent 29px 54px),
@@ -37,7 +37,7 @@ body::after {
   background-size: 140% 140%; animation: drift 60s ease-in-out infinite alternate; }
 .edges::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 50%, transparent 30%, #07090c 85%); }
 @keyframes drift { to { background-position: 30% 20%, 70% 80%; } }
-@media (max-width: 1320px) { .edges { display: none; } }
+.edges { display: none; } /* site now fills the screen, so no dark side edges */
 
 /* shared pieces */
 .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
