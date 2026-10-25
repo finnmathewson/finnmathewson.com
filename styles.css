@@ -106,6 +106,12 @@ body::after {
 .fit-on [data-page] { position: relative; overflow: hidden; }
 .fit-on .about, .fit-on .rates { padding: 0; }
 .fit-on .fit { position: absolute; left: 0; transform-origin: 0 0; padding: 5vh 0; } /* breathing room above and below each page */
+/* small print one size up on computers, so it stays readable when a page is scaled to fit */
+.fit-on .label, .fit-on .lock-note { font-size: 13px; }
+.fit-on .bio p:not(.label):not(.rule), .fit-on .lists ul { font-size: 16px; }
+.fit-on .trip figcaption, .fit-on .insights span, .fit-on .partners .note, .fit-on .bonus .note,
+.fit-on .terms, .fit-on .adv, .fit-on .lock-why { font-size: 16px; }
+.fit-on .insights .k, .fit-on .chart span, .fit-on .foot { font-size: 12px; }
 
 /* ============ ABOUT ============ */
 .about { position: relative; padding-bottom: clamp(40px, 7vw, 90px); }

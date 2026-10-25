@@ -124,12 +124,12 @@
     for (const page of pages) {
       const fit = page.querySelector(".fit");
       if (!on) { page.style.height = ""; fit.style.cssText = ""; continue; }
-      const W = page.clientWidth, H = innerHeight;
+      const W = page.clientWidth, H = innerHeight, MIN = .85; // never shrink below 85%, so small text stays readable
       let k = 1;
-      for (let i = 0; i < 6; i++) { fit.style.width = W / k + "px"; k = Math.min(1, H / fit.offsetHeight); }
+      for (let i = 0; i < 6; i++) { fit.style.width = W / k + "px"; k = Math.max(MIN, Math.min(1, H / fit.offsetHeight)); }
       fit.style.width = W / k + "px";
       const h = fit.offsetHeight * k;
-      page.style.height = H + "px";
+      page.style.height = Math.max(H, h) + "px"; // a page can run a little taller than the screen
       fit.style.transform = `scale(${k})`;
       fit.style.top = Math.max(0, (H - h) / 2) + "px";
     }
