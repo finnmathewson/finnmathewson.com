@@ -67,12 +67,14 @@ body::after {
 
 /* ============ COVER ============ */
 .hero { height: 165vh; position: relative; background: var(--deep); }
+@media (min-aspect-ratio: 4 / 5) { .hero { height: 220vh; } } /* wide screens: a bit more scroll so the slide and the line drawing both play out */
 .stick { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
 .hero .stick { container-type: size; }
 /* photo + cliff line share one 3:4 box that always covers the screen; --focus picks how far down the
    photo we look on wide screens (.5 = middle, 1 = bottom). Shifted down so more cliff shows. */
 .cover-photo { position: absolute; left: 50%; translate: -50% 0; width: max(100cqw, 75cqh); aspect-ratio: 3 / 4;
-  top: calc((100cqh - max(100cqw, 75cqh) * 4 / 3) * var(--focus, .5));
+  /* --pan (0→1 while scrolling the cover) slides the photo up to its bottom edge so the whole traced cliff shows */
+  top: calc((100cqh - max(100cqw, 75cqh) * 4 / 3) * (var(--focus, .5) + var(--pan, 0) * .28));
   transform: scale(calc(1.08 - var(--p, 0) * .08)); transform-origin: 50% 70%; }
 .cover-photo .bg, .cover-photo .overlay { position: absolute; inset: 0; width: 100%; height: 100%; }
 /* no non-scaling-stroke here: it breaks the dash math the self-drawing line relies on */
@@ -82,7 +84,9 @@ body::after {
 .shade { position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(13,26,38,.25), transparent 30%, transparent 70%, rgba(13,26,38,.45)); pointer-events: none; }
 .topbar { position: absolute; top: 22px; left: var(--gutter); right: var(--gutter); z-index: 5; display: flex; justify-content: space-between; gap: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .16em; text-transform: uppercase; }
 .topbar span { background: rgba(13,26,38,.35); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 5px 9px; border-radius: 4px; }
-.hero-title { position: absolute; z-index: 4; left: var(--gutter); right: var(--gutter); top: 15vh; color: var(--snow); transform: translateY(calc(var(--lift, 0) * -6vh)); }
+.hero-title { position: absolute; z-index: 4; left: var(--gutter); right: var(--gutter); top: 15vh; color: var(--snow);
+  /* the name rides up with the photo, so it never covers Finn (no slide on phones, where the photo already fits) */
+  transform: translateY(calc(var(--lift, 0) * -6vh + (100cqh - max(100cqw, 75cqh) * 4 / 3) * var(--pan, 0) * .28)); }
 .handle { font-family: var(--mono); font-size: 13px; letter-spacing: .08em; opacity: .85; margin-bottom: clamp(18px, 2.4vw, 34px); }
 .hero h1 { font-size: clamp(54px, min(11.5vw, 17svh), 190px); /* capped by height so it stays in the sky on short screens */ position: relative; padding-bottom: .26em; white-space: nowrap; }
 .baseline { position: absolute; left: -1%; width: 102%; bottom: -.04em; height: .32em; overflow: visible; }

@@ -21,10 +21,16 @@
     const r = hero.getBoundingClientRect();
     const p = calm ? 1 : clamp(-r.top / Math.max(1, r.height - innerHeight));
     hero.style.setProperty("--p", p.toFixed(4));
-    hero.style.setProperty("--line", ease(clamp(p / .8)).toFixed(4));
+    // wide screens crop the photo, so slide it up first, then draw the line while it's all in view
+    const wide = innerWidth / innerHeight > .8;
+    // wide screens: the photo glides down at one steady speed the whole time; the line draws while it moves
+    const smooth = t => t * t * (3 - 2 * t);
+    // (the first ~23% of the line sits below the frame on wide screens, so the visible drawing starts where it enters)
+    hero.style.setProperty("--line", (wide ? .23 + .77 * smooth(clamp((p - .4) / .5)) : ease(clamp(p / .8))).toFixed(4));
     hero.style.setProperty("--lift", p.toFixed(4));
+    hero.style.setProperty("--pan", p.toFixed(4)); // photo + name slide up together, steady, no stop
     hero.classList.toggle("found", p > .6);
-    hero.classList.toggle("roles-in", p > .12); // roles slide in as the line nears the peak
+    hero.classList.toggle("roles-in", p > (wide ? .48 : .12)); // roles slide in as the line nears the peak
   }
 
   // intro drift (Pinterest "Nature." feel): each photo floats up at its own speed while it comes up the screen,
