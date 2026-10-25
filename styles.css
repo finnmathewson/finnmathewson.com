@@ -84,7 +84,7 @@ body::after {
 .topbar span { background: rgba(13,26,38,.35); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); padding: 5px 9px; border-radius: 4px; }
 .hero-title { position: absolute; z-index: 4; left: var(--gutter); right: var(--gutter); top: 15vh; color: var(--snow); transform: translateY(calc(var(--lift, 0) * -6vh)); }
 .handle { font-family: var(--mono); font-size: 13px; letter-spacing: .08em; opacity: .85; margin-bottom: clamp(18px, 2.4vw, 34px); }
-.hero h1 { font-size: clamp(54px, 11.5vw, 190px); position: relative; padding-bottom: .26em; white-space: nowrap; }
+.hero h1 { font-size: clamp(54px, min(11.5vw, 17svh), 190px); /* capped by height so it stays in the sky on short screens */ position: relative; padding-bottom: .26em; white-space: nowrap; }
 .baseline { position: absolute; left: -1%; width: 102%; bottom: -.04em; height: .32em; overflow: visible; }
 .baseline path { fill: none; stroke: var(--snow); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .baseline { clip-path: inset(-60% 100% -60% -2%); animation: wipe 2.2s var(--ease) .5s forwards; }
@@ -101,6 +101,11 @@ body::after {
 .scroll-hint { position: absolute; z-index: 4; left: 50%; bottom: 3.5vh; transform: translateX(-50%); font-family: var(--mono); font-size: 10px; letter-spacing: .3em; text-transform: uppercase; color: var(--snow); opacity: calc(.8 - var(--p, 0) * 4); }
 .scroll-hint::after { content: ""; display: block; width: 1px; height: 34px; margin: 8px auto 0; background: linear-gradient(var(--snow), transparent); animation: hint 1.8s ease-in-out infinite; }
 @keyframes hint { 0%, 100% { transform: scaleY(.4); transform-origin: top; } 50% { transform: scaleY(1); transform-origin: top; } }
+
+/* one page per screen on computers (sizes set in app.js) */
+.fit-on [data-page] { position: relative; overflow: hidden; }
+.fit-on .about, .fit-on .rates { padding: 0; }
+.fit-on .fit { position: absolute; left: 0; transform-origin: 0 0; padding: 5vh 0; } /* breathing room above and below each page */
 
 /* ============ ABOUT ============ */
 .about { position: relative; padding-bottom: clamp(40px, 7vw, 90px); }

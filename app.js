@@ -36,7 +36,13 @@
   // inner drift skips photos with tracking boxes (hike, snow) so the boxes stay on target
   const inner = [...document.querySelectorAll(".card.tetons img, .window img")];
   const restLine = () => innerHeight * .2; // a page's top reaching this line = everything on it is in place
-  const before = group => Math.max(0, group.getBoundingClientRect().top - restLine()); // 0 once settled
+  // on computers each page fills the screen, so pieces finish exactly when their page lands in view
+  const fitOn = () => document.documentElement.classList.contains("fit-on");
+  const before = group => {
+    const page = fitOn() && group.closest("[data-page]");
+    return page ? Math.max(0, page.getBoundingClientRect().top)
+                : Math.max(0, group.getBoundingClientRect().top - restLine()); // 0 once settled
+  };
   function drift() {
     if (calm) return;
     const k = innerWidth < 760 ? .5 : 1;
@@ -108,6 +114,30 @@
   });
 
   const onScroll = () => { drawHero(); drift(); traceTrucks(); buildBars(); };
+
+  // one page per screen on computers: each page's content is laid out wider, then scaled down evenly
+  // until the whole page fits the window (like zooming the browser out). Phones scroll normally.
+  const pages = [...document.querySelectorAll("[data-page]")];
+  function fitPages() {
+    const on = innerWidth >= 900 && innerWidth / innerHeight > 1.15;
+    document.documentElement.classList.toggle("fit-on", on);
+    for (const page of pages) {
+      const fit = page.querySelector(".fit");
+      if (!on) { page.style.height = ""; fit.style.cssText = ""; continue; }
+      const W = page.clientWidth, H = innerHeight;
+      let k = 1;
+      for (let i = 0; i < 6; i++) { fit.style.width = W / k + "px"; k = Math.min(1, H / fit.offsetHeight); }
+      fit.style.width = W / k + "px";
+      const h = fit.offsetHeight * k;
+      page.style.height = H + "px";
+      fit.style.transform = `scale(${k})`;
+      fit.style.top = Math.max(0, (H - h) / 2) + "px";
+    }
+  }
+  fitPages();
+  document.fonts && document.fonts.ready.then(fitPages);
+  addEventListener("load", fitPages);
+  addEventListener("resize", fitPages);
 
   // smooth, even scrolling (same feel from top to bottom); native scroll if motion is reduced
   if (!calm && window.Lenis) {
