@@ -28,7 +28,7 @@
     // (the first ~23% of the line sits below the frame on wide screens, so the visible drawing starts where it enters)
     hero.style.setProperty("--line", (wide ? .23 + .77 * smooth(clamp((p - .4) / .5)) : ease(clamp(p / .8))).toFixed(4));
     hero.style.setProperty("--lift", p.toFixed(4));
-    hero.style.setProperty("--pan", p.toFixed(4)); // photo + name slide up together, steady, no stop
+    if (wide) hero.style.setProperty("--pan", p.toFixed(4)); // photo + name slide up together, steady, no stop (computers only)
     hero.classList.toggle("found", p > .6);
     hero.classList.toggle("roles-in", p > (wide ? .48 : .12)); // roles slide in as the line nears the peak
   }

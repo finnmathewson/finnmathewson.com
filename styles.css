@@ -262,6 +262,12 @@ body::after {
   .ratelist dl div { font-size: 15px; }
   .chart b { font-size: 11px; }
   /* phone polish */
+  /* smooth cover on phones: let the graphics chip move the photo and name instead of redrawing them,
+     skip the live line wobble and live blurs (both are redrawn on every scroll frame) */
+  .cover-photo { will-change: transform; } /* not on .hero-title: it hides the line under the name */
+  .cover-photo .overlay { will-change: transform; }
+  .ridge { filter: none; }
+  .topbar span, .roles li { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(13,26,38,.62); }
   .band-label { top: 6px; font-size: 9px; } /* sits above the snowy windows instead of on them */
   .code-row input { font-size: 16px; } /* 16px+ stops iPhones zooming the page when the box is tapped */
   .lock-why a.tap { display: inline-block; padding: 8px 2px; margin: -8px 0; } /* bigger tap area, same look */
