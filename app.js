@@ -25,8 +25,10 @@
     const wide = innerWidth / innerHeight > .8;
     // wide screens: the photo glides down at one steady speed the whole time; the line draws while it moves
     const smooth = t => t * t * (3 - 2 * t);
-    // (the first ~23% of the line sits below the frame on wide screens, so the visible drawing starts where it enters)
-    hero.style.setProperty("--line", (wide ? .23 + .77 * smooth(clamp((p - .4) / .5)) : ease(clamp(p / .8))).toFixed(4));
+    // wide screens: nothing is drawn until you scroll; the first ~23% (mostly below the frame) draws quickly,
+    // then the rest climbs the cliff at the steady pace
+    const wideLine = p <= .02 ? 0 : p < .4 ? .23 * smooth(clamp((p - .02) / .38)) : .23 + .77 * smooth(clamp((p - .4) / .5));
+    hero.style.setProperty("--line", (wide ? wideLine : ease(clamp(p / .8))).toFixed(4));
     hero.style.setProperty("--lift", p.toFixed(4));
     if (wide) hero.style.setProperty("--pan", p.toFixed(4)); // photo + name slide up together, steady, no stop (computers only)
     hero.classList.toggle("found", p > .6);
